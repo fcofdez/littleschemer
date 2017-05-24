@@ -89,4 +89,31 @@
   (lambda (l)
     (cond
      ((atom? (car l)) (car l))
-     (else (leftmost (car l)))))
+     (else (leftmost (car l))))))
+
+(define eqlist?
+  (lambda (l1 l2)
+    (cond
+     ((and (null? l1) (null? l2)) #t)
+     ((or (null? l1) (null? l2)) #f)
+     (else (cond
+            ((and (atom? (car l1)) (atom? (car l2)))
+             (and (eq? (car l1) (car l2)) (eqlist? (cdr l1) (cdr l2))))
+            ((or (atom? (car l1)) (atom? (car l2))) #f)
+            (else (and (eqlist? (car l1) (car l2)) (eqlist? (cdr l1) (cdr l2)))))))))
+
+(define equal?
+  (lambda (s1 s2)
+    (cond
+     ((and (atom? s1) (atom? s2)) (eq? s1 s2))
+     ((or (atom? s1) (atom? s2)) #f)
+     (else (eqlist2? s1 s2)))))
+
+(define eqlist2?
+  (lambda (l1 l2)
+    (cond
+     ((and (null? l1) (null? l2)) #t)
+     ((or (null? l1) (null? l2)) #f)
+     (else (and
+            (equal? (car l1) (car l2))
+            (eqlist2? (cdr l1) (cdr l2)))))))
