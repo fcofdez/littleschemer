@@ -22,3 +22,25 @@
      ((and (arithmeticOperator? (car aexp)) prev) (innerNumbered? (cdr aexp) #f))
      ((arithmeticOperator? (car aexp)) #f)
      (else (and (innerNumbered? (car aexp) #f) (innerNumbered? (cdr aexp) #t))))))
+
+
+;; Using church encodings instead of taking for granted that the aexpression is well formed
+(define value
+  (lambda (aexp)
+    ((innerValue aexp))))
+
+(define innerValue
+  (lambda (aexp)
+    (cond
+     ((and (atom? aexp) (number? aexp))
+      (lambda () aexp))
+     ((null? aexp)
+      (lambda (x) (x)))
+     ((eq? (car aexp) '+)
+      (lambda (x) (+ (x) ((value (cdr aexp))))))
+     ((eq? (car aexp) '*)
+      (lambda (x) (+ (x) ((value (cdr aexp))))))
+     ((eq? (car aexp) 'p)
+      (lambda (x) (exp (x) ((value (cdr aexp))))))
+     (else
+      (lambda () ((value (cdr aexp)) (value (car aexp))))))))
