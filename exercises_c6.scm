@@ -44,3 +44,20 @@
       (lambda (x) (exp (x) ((value (cdr aexp))))))
      (else
       (lambda () ((value (cdr aexp)) (value (car aexp))))))))
+
+(define sero?
+  (lambda (n) (null? n)))
+
+(define add1
+  (lambda (n)
+    (cons () n)))
+
+(define sub1
+  (lambda (n)
+    (cat n)))
+
+(define addL
+  (lambda (a b)
+    (cond
+     ((sero? b) a)
+     (else (add1 (addL a (sub1 b))))))
