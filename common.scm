@@ -16,3 +16,7 @@
 
 (define multirember
   (multirember-f equal?))
+
+(define atom?
+  (lambda (atom)
+    (and (not (pair? x)) (not (null? x)))))
