@@ -18,5 +18,5 @@
   (multirember-f equal?))
 
 (define atom?
-  (lambda (atom)
+  (lambda (x)
     (and (not (pair? x)) (not (null? x)))))
