@@ -20,3 +20,19 @@
 (define atom?
   (lambda (x)
     (and (not (pair? x)) (not (null? x)))))
+
+(define build
+  (lambda (s1 s2)
+    (cons s1 (cons s2 '()))))
+
+(define first
+  (lambda (p)
+    (car p)))
+
+(define second
+  (lambda (p)
+    (car (cdr p))))
+
+(define third
+  (lambda (l)
+    (car (cdr (cdr l)))))
